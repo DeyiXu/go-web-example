@@ -1,0 +1,17 @@
+
+[server]
+    [server.http]
+        addr = "0.0.0.0:11005"
+
+[log]
+level = "debug" # panic/fatal/error/warn/info/debug
+
+
+[mysql]
+address = "root:123456@tcp(127.0.0.1:3306)/example?charset=utf8mb4&parseTime=True"
+log = true
+max_open = 100
+max_idle = 10
+
+[snowflake]
+node = 1
