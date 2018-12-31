@@ -1,8 +1,8 @@
 package store
 
 import (
-	"github.com/DeyiXu/go-web-example/module/logger"
 	"github.com/bwmarrin/snowflake"
+	"github.com/nilorg/pkg/logger"
 
 	"github.com/jinzhu/gorm"
 

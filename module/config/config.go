@@ -3,7 +3,7 @@ package config
 import (
 	"log"
 
-	"github.com/DeyiXu/go-web-example/module/logger"
+	"github.com/nilorg/pkg/logger"
 	"github.com/spf13/viper"
 )
 
