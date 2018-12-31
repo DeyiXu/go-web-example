@@ -1,3 +1,6 @@
+[web]
+templates_dir = "./templates"
+assets_dir = "./assets"
 
 [server]
     [server.http]

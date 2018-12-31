@@ -1,9 +1,20 @@
 package auth
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	ngin "github.com/nilorg/pkg/gin"
+)
 
-// Post 登录
-func Post(ctx *gin.Context) {
+// Login ...
+func Login(ctx *ngin.WebContext) {
+	ctx.RenderSinglePage(gin.H{
+		"title": "Login...",
+	})
+}
 
-	ctx.JSON(200, "Ok")
+// Register ...
+func Register(ctx *ngin.WebContext) {
+	ctx.RenderSinglePage(gin.H{
+		"title": "Register...",
+	})
 }

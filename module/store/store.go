@@ -55,9 +55,11 @@ func Start() {
 
 // Close 关闭
 func Close() {
-	err := DB.Close()
-	if err != nil {
-		logger.Errorf("mysql db error:%v\n", err)
+	if DB != nil {
+		err := DB.Close()
+		if err != nil {
+			logger.Errorf("mysql db error:%v\n", err)
+		}
 	}
 }
 
