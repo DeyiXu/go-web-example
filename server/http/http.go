@@ -22,7 +22,7 @@ func Start() {
 	setWeb(engine)
 	setWebRouter(engine.Group("/"))
 	setAPIRouter(engine.Group("/api"))
-	setWechatRouter(engine.Group("/v2"))
+	setAPI2Router(engine.Group("/v2"))
 
 	httpServer = &http.Server{
 		Addr:    viper.GetString("server.http.addr"),

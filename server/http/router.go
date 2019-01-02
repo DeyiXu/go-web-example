@@ -11,11 +11,11 @@ func setAPIRouter(router *gin.RouterGroup) {
 	})
 }
 
-// setWechatRouter V2
-func setWechatRouter(router *gin.RouterGroup) {
+// setAPI2Router V2
+func setAPI2Router(router *gin.RouterGroup) {
 
 	router.GET("/info", func(c *gin.Context) {
-		c.String(200, "da keng!")
+		c.String(200, "go web example.")
 	})
 
 }
