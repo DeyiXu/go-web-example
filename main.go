@@ -4,9 +4,10 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/DeyiXu/go-web-example/model"
+	// "github.com/DeyiXu/go-web-example/model"
 	"github.com/DeyiXu/go-web-example/module/config"
-	"github.com/DeyiXu/go-web-example/module/store"
+
+	// "github.com/DeyiXu/go-web-example/module/store"
 	"github.com/DeyiXu/go-web-example/server"
 	"github.com/DeyiXu/go-web-example/service"
 )
@@ -16,14 +17,14 @@ func init() {
 }
 func start() {
 	server.Start()
-	store.Start()
-	model.AutoMigrate()
+	// store.Start()
+	// model.AutoMigrate()
 
 	service.Start()
 }
 func close() {
 	server.Close()
-	store.Close()
+	// store.Close()
 
 	service.Close()
 }
