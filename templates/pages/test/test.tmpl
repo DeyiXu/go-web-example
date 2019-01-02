@@ -1,0 +1,25 @@
+{{ define "header"}}
+<title>测试页面</title>
+{{ end }}
+{{define "content"}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Test Page Header
+        <small>测试页面描述</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 测试页面</a></li>
+        <li class="active">首页</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content container-fluid">
+    <div>
+        <h1>{{.title}}</h1>
+        <h1>{{.title}}</h1>
+    </div>
+</section>
+<!-- /.content -->
+{{end}}

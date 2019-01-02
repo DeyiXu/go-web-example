@@ -2,10 +2,12 @@ package http
 
 import (
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"path/filepath"
-	homeController "github.com/DeyiXu/go-web-example/controller/home"
+
 	authController "github.com/DeyiXu/go-web-example/controller/auth"
+	homeController "github.com/DeyiXu/go-web-example/controller/home"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
@@ -31,8 +33,15 @@ func loadTemplates(templatesDir string) multitemplate.Render {
 	for _, errPage := range errors {
 		tmplName := fmt.Sprintf("error_%s", filepath.Base(errPage))
 		logger.Debugf("load error tmpl:%s", tmplName)
-		r.AddFromFiles(tmplName, errPage)
+		r.AddFromFilesFuncs(tmplName, loadFuncMap(), errPage)
 	}
+
+	// 加载局部页面
+	partials, err := filepath.Glob(filepath.Join(templatesDir, "partials/*.tmpl"))
+	if err != nil {
+		panic(err)
+	}
+
 	// 页面文件夹
 	pages, err := ioutil.ReadDir(filepath.Join(templatesDir, "pages"))
 	if err != nil {
@@ -50,10 +59,11 @@ func loadTemplates(templatesDir string) multitemplate.Render {
 			files := []string{
 				layout,
 			}
+			files = append(files, partials...)
 			files = append(files, pageItems...)
 			tmplName := fmt.Sprintf("%s_pages_%s", filepath.Base(layout), page.Name())
 			logger.Debugf("load page tmpl:%s", tmplName)
-			r.AddFromFiles(tmplName, files...)
+			r.AddFromFilesFuncs(tmplName, loadFuncMap(), files...)
 		}
 	}
 	// 加载单页面
@@ -64,9 +74,16 @@ func loadTemplates(templatesDir string) multitemplate.Render {
 	for _, singlePage := range singles {
 		tmplName := fmt.Sprintf("singles_%s", filepath.Base(singlePage))
 		logger.Debugf("load single tmpl:%s", tmplName)
-		r.AddFromFiles(tmplName, singlePage)
+		r.AddFromFilesFuncs(tmplName, loadFuncMap(), singlePage)
 	}
 	return r
+}
+
+func loadFuncMap() template.FuncMap {
+	return template.FuncMap{
+		"getMenuData":       authController.GetMenuData,
+		"getNavigationData": authController.GetNavigationData,
+	}
 }
 
 func setWeb(engine *gin.Engine) {
@@ -81,7 +98,8 @@ func setWeb(engine *gin.Engine) {
 }
 
 func setWebRouter(engine *gin.RouterGroup) {
-	engine.GET("/",ngin.WebControllerFunc(homeController.Index,"index"))
+	engine.GET("/", ngin.WebControllerFunc(homeController.Index, "index"))
+	engine.GET("/test", ngin.WebControllerFunc(homeController.Index, "test"))
 	engine.GET("/login", ngin.WebControllerFunc(authController.Login, "login"))
 	engine.GET("/register", ngin.WebControllerFunc(authController.Register, "register"))
 }

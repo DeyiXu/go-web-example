@@ -15,3 +15,12 @@ rm -rf .git
 ```
 find -f './' | xargs perl -pi -e 's|github.com/DeyiXu/go-web-example|book|g'
 ```
+
+# 项目引用
+
+> WEB框架：[gin](https://github.com/gin-gonic/gin)
+
+> ORM：[gorm](https://github.com/jinzhu/gorm)
+
+> 后台管理：[AdminLTE](https://github.com/almasaeed2010/AdminLTE)
+
