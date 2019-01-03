@@ -1,6 +1,7 @@
 package http
 
 import (
+	"encoding/gob"
 	"fmt"
 	"html/template"
 	"io/ioutil"
@@ -87,8 +88,10 @@ func loadFuncMap() template.FuncMap {
 }
 
 func setWeb(engine *gin.Engine) {
+
 	engine.HTMLRender = loadTemplates(viper.GetString("web.templates_dir"))
 	// session
+	gob.Register(gin.H{})
 	store := cookie.NewStore([]byte("secret"))
 	engine.Use(sessions.Sessions("mysession", store))
 	// gizp
@@ -97,9 +100,20 @@ func setWeb(engine *gin.Engine) {
 	engine.Static("/assets", viper.GetString("web.assets_dir"))
 }
 
-func setWebRouter(engine *gin.RouterGroup) {
-	engine.GET("/", ngin.WebControllerFunc(homeController.Index, "index"))
-	engine.GET("/test", ngin.WebControllerFunc(homeController.Index, "test"))
-	engine.GET("/login", ngin.WebControllerFunc(authController.Login, "login"))
-	engine.GET("/register", ngin.WebControllerFunc(authController.Register, "register"))
+func setWebRouter(router *gin.RouterGroup) {
+	// auth
+	authRouter := router.Group("/")
+	authRouter.Use(AuthRequired)
+	{
+		authRouter.GET("/", ngin.WebControllerFunc(homeController.Index, "index"))
+		authRouter.GET("/index.html", ngin.WebControllerFunc(homeController.Index, "index"))
+		authRouter.GET("/logout.html", ngin.WebAPIControllerFunc(authController.Logout))
+		
+		authRouter.GET("/test", ngin.WebControllerFunc(homeController.Index, "test"))
+	}
+	
+
+	router.GET("/login.html", ngin.WebControllerFunc(authController.GetLogin, "login"))
+	router.GET("/register.html", ngin.WebControllerFunc(authController.GetRegister, "register"))
+	
 }

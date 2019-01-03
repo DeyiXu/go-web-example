@@ -20,8 +20,9 @@ require (
 	github.com/kr/pty v1.1.3 // indirect
 	github.com/lib/pq v1.0.0 // indirect
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
-	github.com/nilorg/pkg v0.0.0-20190102100430-fded194654ac
+	github.com/nilorg/pkg v0.0.0-20190103040245-eb93939a44e4
 	github.com/spf13/viper v1.2.1
-	golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9 // indirect
+	golang.org/x/crypto v0.0.0-20190102171810-8d7daa0c54b3 // indirect
+	golang.org/x/sys v0.0.0-20190102155601-82a175fd1598 // indirect
 	google.golang.org/appengine v1.3.0 // indirect
 )

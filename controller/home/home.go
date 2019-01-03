@@ -7,11 +7,6 @@ import (
 
 // Index ...
 func Index(ctx *ngin.WebContext) {
-	ctx.SetCurrentAccount(gin.H{
-		"name":   "德意洋洋",
-		"status": "在线",
-		"cover":  "/assets/img/IMG_3476.jpg",
-	})
 	ctx.RenderPage(gin.H{
 		"title": "index...",
 	})
