@@ -9,6 +9,7 @@ import (
 
 	authController "github.com/DeyiXu/go-web-example/controller/auth"
 	homeController "github.com/DeyiXu/go-web-example/controller/home"
+	errorController "github.com/DeyiXu/go-web-example/controller/error"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
@@ -88,6 +89,8 @@ func loadFuncMap() template.FuncMap {
 }
 
 func setWeb(engine *gin.Engine) {
+	// 404 page
+	engine.NoRoute(errorController.Error404)
 
 	engine.HTMLRender = loadTemplates(viper.GetString("web.templates_dir"))
 	// session

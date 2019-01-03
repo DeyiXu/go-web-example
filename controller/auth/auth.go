@@ -65,7 +65,6 @@ func PostRegister(ctx *ngin.WebContext) {
 // GetMenuData 获取菜单数据
 func GetMenuData(value interface{}) gin.H {
 	logger.Debugln("getMenuData...")
-	logger.Debugln(value)
 	return gin.H{
 		"account": value,
 		"info":    "...",
@@ -75,7 +74,6 @@ func GetMenuData(value interface{}) gin.H {
 // GetNavigationData 获取导航数据
 func GetNavigationData(value interface{}) gin.H {
 	logger.Debugln("GetNavigationData...")
-	logger.Debugln(value)
 	return gin.H{
 		"account": value,
 		"info":    "navigation...",
