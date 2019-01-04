@@ -1,0 +1,29 @@
+{{ define "scripts"}}
+<script src="/assets/components/dropzone/dropzone.js"></script>
+<script src="/assets/components/bootstrap-markdown-2.10.0/js/markdown.js"></script>
+<script src="/assets/components/bootstrap-markdown-2.10.0/js/to-markdown.js"></script>
+<script src="/assets/components/bootstrap-markdown-2.10.0/js/bootstrap-markdown.js"></script>
+<script src="/assets/components/bootstrap-markdown-2.10.0/locale/bootstrap-markdown.zh.js"></script>
+<script src="/assets/components/jquery.hotkeys/jquery.hotkeys-0.2.0.js"></script>
+<!-- Select2 -->
+<script src="/assets/components/select2/js/select2.full.min.js"></script>
+<script type="text/javascript">
+    window.PageComplete = function () {
+        console.log("PageComplete test....");
+        $("#content").markdown({
+            autofocus: false,
+            savable: true,
+            iconlibrary: "fa",
+            language: "zh",
+            onSave: function (e) {
+                console.log(e.getContent());
+                // alert("Saving '" + e.getContent() + "'...")
+            },
+            onChange: function (e) {
+                console.log("Changed!")
+            }
+        })
+        $('.select2').select2()
+    }
+</script>
+{{ end }}

@@ -8,8 +8,9 @@ import (
 	"path/filepath"
 
 	authController "github.com/DeyiXu/go-web-example/controller/auth"
-	homeController "github.com/DeyiXu/go-web-example/controller/home"
 	errorController "github.com/DeyiXu/go-web-example/controller/error"
+	homeController "github.com/DeyiXu/go-web-example/controller/home"
+	postsController "github.com/DeyiXu/go-web-example/controller/posts"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
@@ -111,12 +112,12 @@ func setWebRouter(router *gin.RouterGroup) {
 		authRouter.GET("/", ngin.WebControllerFunc(homeController.Index, "index"))
 		authRouter.GET("/index.html", ngin.WebControllerFunc(homeController.Index, "index"))
 		authRouter.GET("/logout.html", ngin.WebAPIControllerFunc(authController.Logout))
-		
+
 		authRouter.GET("/test", ngin.WebControllerFunc(homeController.Index, "test"))
+		authRouter.GET("/posts/edit", ngin.WebControllerFunc(postsController.GetEdit, "posts_edit"))
 	}
-	
 
 	router.GET("/login.html", ngin.WebControllerFunc(authController.GetLogin, "login"))
 	router.GET("/register.html", ngin.WebControllerFunc(authController.GetRegister, "register"))
-	
+
 }
