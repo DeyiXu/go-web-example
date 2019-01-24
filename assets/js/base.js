@@ -1,3 +1,16 @@
+var setMenuActive = function () {
+    var pathname = window.location.pathname;
+    var $leftMenu = $("#leftMenu");
+    var active = "active";
+    var $liList = $leftMenu.find('li');
+    $liList.removeClass(active);
+    $liList.removeClass('menu-open');
+    $liList.children('ul.treeview-menu').hide();
+
+    var $checkedMenu = $leftMenu.find("a[href='" + pathname + "']");
+    $checkedMenu.parents("#leftMenu li").addClass(active);
+    $checkedMenu.parents("#leftMenu ul.treeview-menu").show();
+};
 
 var pjaxLoad = function () {
     $.pjax.defaults.timeout = 5000;
@@ -9,8 +22,10 @@ var pjaxLoad = function () {
         console.debug("服务器请求发送~~~");
     });
     $(document).on('pjax:complete', function () {
+        setMenuActive();
         if (window.PageComplete) {
             window.PageComplete();
+            window.PageComplete = null;
         }
     });
     $(document).on('pjax:timeout', function (event) {
@@ -23,15 +38,16 @@ var pjaxLoad = function () {
         if (textStatus.status == 500) {
 
         }
-    })
+    });
     $(document).on('pjax:end', function () {
         console.debug("服务器请求结束~~~");
     });
-}
+};
 
 
 $(document).ready(function () {
     pjaxLoad();
+    setMenuActive();
     if (window.PageComplete) {
         window.PageComplete();
     }
