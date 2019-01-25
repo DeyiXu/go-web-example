@@ -7,16 +7,12 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
-	authController "github.com/DeyiXu/go-web-example/controller/auth"
-	errorController "github.com/DeyiXu/go-web-example/controller/error"
-	homeController "github.com/DeyiXu/go-web-example/controller/home"
-	postsController "github.com/DeyiXu/go-web-example/controller/posts"
+	"github.com/DeyiXu/go-web-example/controller/web"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	ngin "github.com/nilorg/pkg/gin"
 	"github.com/nilorg/pkg/logger"
 	"github.com/spf13/viper"
 )
@@ -84,14 +80,14 @@ func loadTemplates(templatesDir string) multitemplate.Render {
 
 func loadFuncMap() template.FuncMap {
 	return template.FuncMap{
-		"getMenuData":       authController.GetMenuData,
-		"getNavigationData": authController.GetNavigationData,
+		"getMenuData":       web.Auth.GetMenuData,
+		"getNavigationData": web.Auth.GetNavigationData,
 	}
 }
 
 func setWeb(engine *gin.Engine) {
 	// 404 page
-	engine.NoRoute(errorController.Error404)
+	engine.NoRoute(web.Error.Error404)
 
 	engine.HTMLRender = loadTemplates(viper.GetString("web.templates_dir"))
 	// session
@@ -102,22 +98,4 @@ func setWeb(engine *gin.Engine) {
 	engine.Use(gzip.Gzip(gzip.DefaultCompression))
 	// file server
 	engine.Static("/assets", viper.GetString("web.assets_dir"))
-}
-
-func setWebRouter(router *gin.RouterGroup) {
-	// auth
-	authRouter := router.Group("/")
-	authRouter.Use(AuthRequired)
-	{
-		authRouter.GET("/", ngin.WebControllerFunc(homeController.Index, "index"))
-		authRouter.GET("/index.html", ngin.WebControllerFunc(homeController.Index, "index"))
-		authRouter.GET("/logout.html", ngin.WebAPIControllerFunc(authController.Logout))
-
-		authRouter.GET("/test", ngin.WebControllerFunc(homeController.Index, "test"))
-		authRouter.GET("/posts/edit", ngin.WebControllerFunc(postsController.GetEdit, "posts_edit"))
-	}
-
-	router.GET("/login.html", ngin.WebControllerFunc(authController.GetLogin, "login"))
-	router.GET("/register.html", ngin.WebControllerFunc(authController.GetRegister, "register"))
-
 }
